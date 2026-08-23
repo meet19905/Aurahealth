@@ -15,7 +15,7 @@ export default function AdminPortal() {
 
   const fetchStats = async () => {
     try {
-      const res = await axios.get('http://localhost:5001/api/admin/stats');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/admin/stats`);
       setStats(res.data);
     } catch (err) {
       console.error(err);
@@ -23,7 +23,7 @@ export default function AdminPortal() {
   };
   const fetchLeaves = async () => {
     try {
-      const res = await axios.get('http://localhost:5001/api/admin/leaves/pending');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/admin/leaves/pending`);
       setPendingLeaves(res.data);
     } catch (err) {
       console.error(err);
@@ -32,7 +32,7 @@ export default function AdminPortal() {
 
   const fetchDoctorRequests = async () => {
     try {
-      const res = await axios.get('http://localhost:5001/api/admin/doctor-requests/pending');
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/admin/doctor-requests/pending`);
       setPendingDoctors(res.data);
     } catch (err) {
       console.error(err);
@@ -47,7 +47,7 @@ export default function AdminPortal() {
 
   const handleApprove = async (id) => {
     try {
-      const res = await axios.post(`http://localhost:5001/api/admin/leaves/${id}/approve`);
+      const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/admin/leaves/${id}/approve`);
       setMessage(res.data.message);
       fetchLeaves();
     } catch (err) {
@@ -57,7 +57,7 @@ export default function AdminPortal() {
 
   const handleReject = async (id) => {
     try {
-      await axios.post(`http://localhost:5001/api/admin/leaves/${id}/reject`);
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/admin/leaves/${id}/reject`);
       setMessage('Leave request rejected.');
       fetchLeaves();
     } catch (err) {
@@ -67,7 +67,7 @@ export default function AdminPortal() {
 
   const handleApproveDoctor = async (id) => {
     try {
-      const res = await axios.post(`http://localhost:5001/api/admin/doctor-requests/${id}/approve`);
+      const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/admin/doctor-requests/${id}/approve`);
       setDoctorMsg(res.data.message);
       fetchDoctorRequests();
     } catch (err) {
@@ -77,7 +77,7 @@ export default function AdminPortal() {
 
   const handleRejectDoctor = async (id) => {
     try {
-      await axios.post(`http://localhost:5001/api/admin/doctor-requests/${id}/reject`);
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/admin/doctor-requests/${id}/reject`);
       setDoctorMsg('Registration rejected.');
       fetchDoctorRequests();
     } catch (err) {
@@ -88,7 +88,7 @@ export default function AdminPortal() {
   const handleManualDoctorAdd = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5001/api/admin/doctors', newDoctor);
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/admin/doctors`, newDoctor);
       setManualMsg('Doctor added successfully!');
       setNewDoctor({ name: '', email: '', password: '', specialization: '' });
       fetchStats();

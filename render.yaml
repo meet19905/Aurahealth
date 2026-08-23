@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: aurahealth-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        value: "file:./dev.db"
+      - key: NODE_VERSION
+        value: "18.17.0"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GEMINI_API_KEY
+        sync: false
+
+  - type: web
+    name: aurahealth-frontend
+    env: static
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: aurahealth-backend
+          envVarKey: RENDER_EXTERNAL_URL

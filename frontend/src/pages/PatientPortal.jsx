@@ -17,8 +17,8 @@ export default function PatientPortal() {
   const fetchData = async () => {
     try {
       const [docsRes, apptsRes] = await Promise.all([
-        axios.get('http://localhost:5001/api/doctors'),
-        axios.get(`http://localhost:5001/api/appointments/patient/user/${user.id}`)
+        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/doctors`),
+        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/appointments/patient/user/${user.id}`)
       ]);
       setDoctors(docsRes.data);
       setMyAppointments(apptsRes.data);
@@ -33,7 +33,7 @@ export default function PatientPortal() {
 
   const handleHoldSlot = async () => {
     try {
-      const res = await axios.post('http://localhost:5001/api/appointments/hold', {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/appointments/hold`, {
         doctorId: selectedDoctor.id,
         patientId: user.id,
         date,
@@ -49,7 +49,7 @@ export default function PatientPortal() {
 
   const handleConfirm = async () => {
     try {
-      await axios.post(`http://localhost:5001/api/appointments/${appointment.id}/confirm`, {
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/appointments/${appointment.id}/confirm`, {
         symptoms
       });
       setStep(3);

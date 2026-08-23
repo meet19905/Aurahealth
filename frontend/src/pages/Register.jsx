@@ -21,11 +21,11 @@ export default function Register() {
     setSuccess('');
     try {
       if (role === 'DOCTOR') {
-        const res = await axios.post('http://localhost:5001/api/auth/register-doctor-request', { name, email, password, specialization });
+        const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/auth/register-doctor-request`, { name, email, password, specialization });
         setSuccess(res.data.message);
         setName(''); setEmail(''); setPassword(''); setSpecialization('');
       } else {
-        await axios.post('http://localhost:5001/api/auth/register', { name, email, password });
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/auth/register`, { name, email, password });
         navigate('/login');
       }
     } catch (err) {

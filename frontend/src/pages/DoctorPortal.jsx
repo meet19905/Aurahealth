@@ -20,8 +20,8 @@ export default function DoctorPortal() {
       const user = JSON.parse(localStorage.getItem('user'));
       if (!user) return;
       const [apptRes, leavesRes] = await Promise.all([
-        axios.get(`http://localhost:5001/api/appointments/doctor/user/${user.id}`),
-        axios.get(`http://localhost:5001/api/doctors/user/${user.id}/leaves`)
+        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/appointments/doctor/user/${user.id}`),
+        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/doctors/user/${user.id}/leaves`)
       ]);
       setAppointments(apptRes.data);
       setLeaves(leavesRes.data);
@@ -42,7 +42,7 @@ export default function DoctorPortal() {
     setIsSubmitting(true);
     setMessage('');
     try {
-      await axios.post(`http://localhost:5001/api/appointments/${selectedAppt.id}/post-visit`, {
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/appointments/${selectedAppt.id}/post-visit`, {
         notes,
         prescription
       });
@@ -63,7 +63,7 @@ export default function DoctorPortal() {
     setLeaveMessage('');
     try {
       const user = JSON.parse(localStorage.getItem('user'));
-      await axios.post(`http://localhost:5001/api/doctors/user/${user.id}/leave-request`, {
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/doctors/user/${user.id}/leave-request`, {
         date: leaveDate,
         reason: leaveReason
       });
