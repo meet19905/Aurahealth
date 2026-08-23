@@ -196,7 +196,22 @@ export default function PatientPortal() {
               </div>
               <div className="form-group">
                 <label className="form-label">Select Time</label>
-                <input type="time" className="form-input" value={time} onChange={e => setTime(e.target.value)} />
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '0.75rem', marginTop: '0.5rem' }}>
+                  {["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"].map(t => (
+                    <button
+                      key={t}
+                      className={`btn ${time === t ? 'btn-primary' : 'btn-outline'}`}
+                      style={{ padding: '0.75rem 0.5rem', fontSize: '0.95rem' }}
+                      onClick={() => setTime(t)}
+                    >
+                      {parseInt(t.split(':')[0]) > 12 
+                        ? `${parseInt(t.split(':')[0]) - 12}:${t.split(':')[1]} PM` 
+                        : parseInt(t.split(':')[0]) === 12 
+                          ? `12:${t.split(':')[1]} PM` 
+                          : `${t} AM`}
+                    </button>
+                  ))}
+                </div>
               </div>
               
               <button className="btn btn-primary btn-block" style={{ marginTop: '1rem' }} onClick={handleHoldSlot} disabled={!date || !time}>
