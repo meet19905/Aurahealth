@@ -1,5 +1,7 @@
 # Healthcare Appointment & Follow-up Manager
 
+**Hosted Application URL: [https://aurahealth-frontend.onrender.com](https://aurahealth-frontend.onrender.com)**
+
 A comprehensive platform for booking and managing healthcare appointments, powered by AI.
 
 ## Setup Guide
