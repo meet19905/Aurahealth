@@ -113,11 +113,11 @@ router.post('/:id/leave', async (req, res) => {
       await prisma.notificationOutbox.create({
         data: {
           type: 'EMAIL',
-          payload: {
+          payload: JSON.stringify({
             to: appt.patient.email,
             subject: 'Appointment Cancelled',
             text: `Your appointment on ${date} has been cancelled because the doctor is on leave. Please reschedule.`
-          }
+          })
         }
       });
       // (Optionally queue Calendar deletion)
