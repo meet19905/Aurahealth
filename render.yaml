@@ -10,7 +10,7 @@ services:
       - key: DATABASE_URL
         value: "file:./dev.db"
       - key: NODE_VERSION
-        value: "18.17.0"
+        value: "20"
       - key: JWT_SECRET
         generateValue: true
       - key: GEMINI_API_KEY
